@@ -16,6 +16,7 @@ When method post
 Then status 201
 And match response == {id: '#string', name: '#string', secretIdentity: '#string'}
 
+
 Scenario: Creates a new  Avenger without required data
 Given path 'avengers'
 And request {name: 'Captain America'}
