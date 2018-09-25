@@ -9,6 +9,11 @@ When method get
 Then status 200
 And match response == {id: '#string', name: '#string', secretIdentity: '#string'}
 
+Scenario: Avenger not found - Method Get
+Given path 'avengers', 'avenger -not-found'
+When method get
+Then status 404
+
 Scenario: Creates a new  Avenger
 Given path 'avengers'
 And request {name: 'Captain America', secretIdentity: 'Steve Rogres'}
@@ -34,6 +39,14 @@ And request {name: 'Captain America', secretIdentity: 'Steve Rogres'}
 When method put
 Then status 200
 And match response == {id: '#string', name: '#string', secretIdentity: '#string'}
+
+
+Scenario: Avenger not found - Method Put
+And request {name: 'Captain America', secretIdentity: 'Steve Rogres'}
+Given path 'avengers', 'avenger -not-found'
+When method put
+Then status 404
+
 
 Scenario: Update a Avenger by ID
 Given path 'avengers', 'aaaa-bbbb-cccc-dddd'
