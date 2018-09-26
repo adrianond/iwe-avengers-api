@@ -20,8 +20,9 @@ public class CreateAvengersHandler implements RequestHandler<Avenger, HandlerRes
 		if (avengerCreated != null) {
 			context.getLogger().log("[#] - Avenger created");
 		}
+		
 
-		final HandlerResponse response = HandlerResponse.builder().setObjectBody(newAvenger).build();
+		final HandlerResponse response = HandlerResponse.builder().setObjectBody(avengerCreated).build();
 
 		return response;
 	}
