@@ -12,6 +12,7 @@ Then status 404
 
 Scenario: Creates a new Avenger
 
+#Cria o avenger
 Given path 'avengers'
 And request {name: 'Captain America', secretIdentity: 'Steve Rogers'}
 When method post
@@ -20,6 +21,7 @@ And match response == {id: '#string', name: 'Captain America', secretIdentity: '
 
 * def savedAvenger = response
 
+#Pesquisa pelo avenger para validar a criação do mesmo no BD
 Given path 'avengers', savedAvenger.id
 When method get
 Then status 200
@@ -36,7 +38,23 @@ Then status 400
 
 
 Scenario: Delete Avenger by id
-Given path 'avengers', 'aaaa-bbbb-cccc-dddd'
+#Cria o avenger
+Given path 'avengers'
+And request {name: 'Captain America', secretIdentity: 'Steve Rogers'}
+When method post
+Then status 201
+And match response == {id: '#string', name: 'Captain America', secretIdentity: 'Steve Rogers'}
+
+* def savedAvenger = response
+
+#Pesquisa pelo avenger para validar a criação do mesmo no BD 
+Given path 'avengers', savedAvenger.id
+When method get
+Then status 200
+And match $ == savedAvenger
+
+#Exclui o avenger no BD
+Given path 'avengers', savedAvenger.id
 When method delete
 Then status 204
 
@@ -48,11 +66,35 @@ Then status 404
 
 Scenario: Updates the Avenger data
 
-Given path 'avengers', 'aaaa-bbbb-cccc-dddd'
-And request {name: 'Captain America', secretIdentity: 'Steve Rogers'}
+#Cria o avenger
+Given path 'avengers'
+And request {name: 'Captain America7', secretIdentity: 'Steve Rogers7'}
+When method post
+Then status 201
+And match response == {id: '#string', name: 'Captain America7', secretIdentity: 'Steve Rogers7'}
+
+* def savedAvenger = response
+
+#Pesquisa pelo avenger para validar a criação do mesmo no BD 
+Given path 'avengers', savedAvenger.id
+When method get
+Then status 200
+And match $ == savedAvenger
+
+#Altera o avenger no BD
+Given path 'avengers', savedAvenger.id
+And request {name: 'Captain America1', secretIdentity: 'Steve Rogers1'}
 When method put
 Then status 200
-And match response ==  {id: '#string', name: '#string', secretIdentity: '#string'}
+And match response ==  {id: '#string', name: 'Captain America1', secretIdentity: 'Steve Rogers1'}
+
+#* def updatedAvenger = response
+
+#consulta para verificar se o recurso foi realmente alterado 
+#Given path 'avengers', updatedAvenger.id
+#When method get
+#Then status 200
+#And match $ == updatedAvenger
 
 Scenario: Updates the avenger without the required data
 

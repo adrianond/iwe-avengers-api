@@ -31,8 +31,19 @@ public class AvengerDao {
 	 * 
 	 * @param avenger
 	 */
-	public void remove(Avenger avenger) {
-		mapper.delete(avenger);
+	public void remove(String id) {
+		mapper.delete(id);
 	}
+	
+	/**
+	 * 
+	 * @param avenger
+	 * @return 
+	 */
+	public Avenger update(Avenger avenger) {
+		return create(avenger);
+	}
+	
+	
 
 }

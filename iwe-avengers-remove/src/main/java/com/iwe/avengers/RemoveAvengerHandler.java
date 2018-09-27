@@ -22,7 +22,7 @@ public class RemoveAvengerHandler implements RequestHandler<Avenger, HandlerResp
 			throw new AvengerNotFoundException("[NotFound] - Avenger id: " + avenger.getId());
 		}  
 			
-			dao.remove(avenger);
+			dao.remove(avenger.getId());
 			context.getLogger().log("[#] - Avenger deleted");
 		
 
