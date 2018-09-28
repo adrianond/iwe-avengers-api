@@ -3,8 +3,25 @@ Feature: Perform integrated tests on the Avengers registration API
 Background:
 * url 'https://xbg1f6yo1b.execute-api.us-east-1.amazonaws.com/dev/'
 
+* def getToken =
+"""
+function() {
+ var TokenGenerator = Java.type('com.iwe.avengers.test.authorization.TokenGenerator');
+ var sg = new TokenGenerator();
+ return sg.getToken();
+}
+"""
+* def token = call getToken
+
+Scenario: Sould return non-authenticated access
+Given path 'avengers', 'anyid'
+When method get
+Then status 401
+
+
 Scenario: Avenger not found
 Given path 'avengers', 'avenger-not-found'
+And header Authorization = 'Bearer ' + token
 When method get
 Then status 404
 
@@ -21,6 +38,7 @@ And match response == {id: '#string', name: 'Captain America', secretIdentity: '
 
 #Pesquisa pelo avenger para validar a criação do mesmo no BD
 Given path 'avengers', savedAvenger.id
+And header Authorization = 'Bearer ' + token
 When method get
 Then status 200
 And match $ == savedAvenger
@@ -49,6 +67,7 @@ And match response == {id: '#string', name: 'Captain America', secretIdentity: '
 
 #Pesquisa pelo avenger para validar a criação do mesmo no BD 
 Given path 'avengers', savedAvenger.id
+And header Authorization = 'Bearer ' + token
 When method get
 Then status 200
 And match $ == savedAvenger
@@ -60,6 +79,7 @@ Then status 204
 
 #confirma se o avenger foi excluido
 Given path 'avengers', savedAvenger.id
+And header Authorization = 'Bearer ' + token
 When method get
 Then status 200
 
@@ -90,6 +110,7 @@ And match response ==  {id: '#string', name: 'Captain America-010', secretIdenti
 
 #consulta para verificar se o recurso foi realmente alterado 
 Given path 'avengers', updatedAvenger.id
+And header Authorization = 'Bearer ' + token
 When method get
 Then status 200
 And match $ == updatedAvenger
