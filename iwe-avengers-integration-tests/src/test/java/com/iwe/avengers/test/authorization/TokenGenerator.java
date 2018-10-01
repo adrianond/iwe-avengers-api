@@ -18,7 +18,9 @@ public class TokenGenerator {
 
 		String authresult = null;
 
+		// clientId do avengers-api (console AWS - Cognito - Manager User Pools -shield-agents-pool -  App clients)
 		final String clientId = "6vmhmjhigb4kt4eeot6h4virrf";
+		// userPoolId  (console AWS - Cognito - Manager User Pools - shield-agents-pool - General Settings)
 		final String userPoolId = "us-east-1_CszB0T5ZC";
 
 		final AuthenticationHelper auth = new AuthenticationHelper(userPoolId, clientId);
