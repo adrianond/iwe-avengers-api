@@ -23,6 +23,9 @@ public class RemoveAvengerHandler implements RequestHandler<Avenger, HandlerResp
 		}  
 			
 			dao.remove(avenger.getId());
+			
+			//remover todos os Avengers
+			//TODO
 			context.getLogger().log("[#] - Avenger deleted");
 		
 
